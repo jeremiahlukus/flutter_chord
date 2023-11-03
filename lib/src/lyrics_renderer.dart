@@ -130,6 +130,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
       text: widget.lyrics,
       lyricsStyle: widget.textStyle,
       chordStyle: widget.chordStyle,
+      chorusStyle: chorusStyle,
       widgetPadding: widget.widgetPadding,
       scaleFactor: widget.scaleFactor,
       transposeIncrement: widget.transposeIncrement,
@@ -192,6 +193,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                             chord.chordText = '    ' + chord.chordText.trim();
                           }
                         }
+
                         return Row(
                           children: [
                             SizedBox(

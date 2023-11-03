@@ -21,6 +21,7 @@ class ChordProcessor {
     required String text,
     required TextStyle lyricsStyle,
     required TextStyle chordStyle,
+    required TextStyle chorusStyle,
     double scaleFactor = 1.0,
     int widgetPadding = 0,
     int transposeIncrement = 0,
@@ -44,7 +45,7 @@ class ChordProcessor {
       }
 
       //check if we have a long line
-      if (textWidth(currentLine, lyricsStyle) >= media) {
+      if (textWidth(currentLine + '    ', lyricsStyle) >= media) {
         _handleLongLine(
             currentLine: currentLine,
             newLines: newLines,
@@ -58,7 +59,7 @@ class ChordProcessor {
 
     List<ChordLyricsLine> _chordLyricsLines = newLines
         .map<ChordLyricsLine>(
-            (line) => _processLine(line, lyricsStyle, chordStyle))
+            (line) => _processLine(line, lyricsStyle, chordStyle, chorusStyle))
         .toList();
 
     return ChordLyricsDocument(_chordLyricsLines,
@@ -99,7 +100,8 @@ class ChordProcessor {
         //widgetPadding has been added as a parameter to be passed from the build function
         //It is intended to allow for padding in the widget when comparing it to screen width
         //An additional buffer of around 10 might be needed to definitely stop overflow (ie. padding + 10).
-        if (textWidth(_currentCharacters, lyricsStyle) + widgetPadding >=
+        if (textWidth(_currentCharacters + '    ', lyricsStyle) +
+                widgetPadding >=
             media) {
           newLines
               .add(currentLine.substring(_characterIndex, _lastSpace).trim());
@@ -125,22 +127,30 @@ class ChordProcessor {
         .width;
   }
 
-  ChordLyricsLine _processLine(
-      String line, TextStyle lyricsStyle, TextStyle chordStyle) {
+  bool isChorus = false;
+  ChordLyricsLine _processLine(String line, TextStyle lyricsStyle,
+      TextStyle chordStyle, TextStyle chorusStyle) {
     ChordLyricsLine _chordLyricsLine = ChordLyricsLine();
     String _lyricsSoFar = '';
     String _chordsSoFar = '';
     bool _chordHasStarted = false;
+
+    if (line.contains("{soc}") || line.contains("{start_of_chorus}")) {
+      isChorus = true;
+    } else if (line.contains("{eoc}") || line.contains("{end_of_chorus}")) {
+      isChorus = false;
+    }
+
     line.split('').forEach((character) {
       if (character == ']') {
-        final sizeOfLeadingLyrics = textWidth(_lyricsSoFar, lyricsStyle);
+        final sizeOfLeadingLyrics = isChorus
+            ? textWidth(_lyricsSoFar, chorusStyle)
+            : textWidth(_lyricsSoFar, lyricsStyle);
 
         final lastChordText = _chordLyricsLine.chords.isNotEmpty
             ? _chordLyricsLine.chords.last.chordText
             : '';
-
         final lastChordWidth = textWidth(lastChordText, chordStyle);
-        // final sizeOfThisChord = textWidth(_chordsSoFar, chordStyle);
 
         double leadingSpace = max(0, sizeOfLeadingLyrics - lastChordWidth);
 

@@ -167,12 +167,12 @@ class _HomePageState extends State<HomePage> {
 [Am]Give me reason, [G]Take me higher
 [C]See the champions [F], Take the field now
 [Am]Unify us, [G]make us feel proud
- 
+ {soc}
 [C]In the streets our, [F]hands are lifting
 [Am]As we lose our, [G]inhibition
 [C]Celebration, [F]its around us
 [Am]Every nation, [G]all around us
-
+{eoc}
 1
 [C]Give me Freedom, [F]Give me fire
 [Am]Give me reason, [G]Take me higher
