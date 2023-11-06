@@ -29,6 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final chordStyle = TextStyle(fontSize: 20, color: Colors.green);
   final textStyle = TextStyle(fontSize: 18, color: Colors.white);
+  final scrollController = ScrollController();
   String _lyrics = '';
   int transposeIncrement = 0;
   int scrollSpeed = 0;
@@ -127,6 +128,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(12.0),
               color: Colors.black,
               child: LyricsRenderer(
+                scrollController: scrollController,
                 lyrics: _lyrics,
                 textStyle: textStyle,
                 chordStyle: chordStyle,
@@ -162,64 +164,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _lyrics = '''
-1
-[D]Let me stand be[G]hind You, [D]Lord.
-Let me wash Your [G]feet with my [D]tears.
-Let me [A]wipe them with my [D]hair.
-Let me [Em]kiss them and an[A]oint them with the [D]ointment.
-{soc}
-I [G]love You!
-Jesus, I [D]love You!
-May I waste my all and life on [A]You.
-Let me [D]pour the ointment [Bm]pure
-On Your [G]head and on Your feet,
-On You, most [D]precious One,
-Bec[A]ause I love [D]You.
-{eoc}
-2
-[D]Let me take a [G]pound of ointment [D]pure
-Of great value [G]to anoint Your [D]feet
-And [A]wipe them with my [D]hair
-That the [Em]house be filled with the [A]fragrance of the [D]ointment.
-{soc}
-    I [G]love You!
-    Jesus, I [D]love You!
-    May I waste my all and life on [A]You.
-  Let me [D]pour the ointment [Bm]pure
-  On Your [G]head and on Your feet,
-  On You, most [D]precious One,
-  Be[A]cause I love [D]You.
-{eoc}
-3
-[D]Lord, they said if [G]You were a [D]prophet,
-You should know who and [G]what I [D]am.
-I'm a [A]sinner that toucheth [D]You,
-A [Em]woman not [A]worthy to a[D]noint You. 
-{soc}
- But I [G]love You!
- Jesus, I [D]love You!
- You forgave me the most; now I love You, Lord, the [A]most.
- Let me [D]pour the ointment [Bm]pure
- On Your [G]head and on Your feet,
- On You, most [D]precious One,
- Be[A]cause You love [D]me.
-{eoc}
-4
-[D]Let my love from my [G]being wash Your [D]feet
-And my glory with[G]out wipe them [D]too.
-Let me [A]kiss them where the nails would [D]pierce.
-All my [Em]love, Lord, and [A]glory I'll waste on [D]You.
-{soc}  
-    I [G]love You!
-   Jesus, I [D]love You!
-   All my glory and love I pour and waste on [A]You.
-   Re[D]ceive my ointment, [Bm]Lord.
-   It's [G]all I have, dear Lord.
-   For You, most [D]precious One,
-   Be[A]cause I love [D]You.
-{eoc}
-
-''';
+    _lyrics =
+        "{capo: 3}\n\n1\n[G]Christ [C9]has [G]come to be [C9]life,\nThe [G]processed di[C9]vine Trini[G]ty.[C9]\n[G]God [C9]the [G]Father’s the [C9]source,\nA [G]fountain e[C9]merging to [G]be[C9]\nGod the [D]Son as a [C9]gushing-up [G]spring.\nIn the [Am]Spirit, a river, for [C9]life impar[G]ting\nOh, [Em]how can this miracle [C]be?\nThe [Am]Triune God flowing in [D]me!\nOh, [G]I’ve [C9]got [G]rivers of [C9]life,\nFlowing [G]out of my [C9]innermost [G]being![C9]\n[G]I’ve [C9]got [G]rivers of [C9]life,\nFlowing [G]out of my [C9]innermost [G]being!\n\n{soc}\n  As this [Em]life [D]flows through [G]me,\n  [Em]I’m sup[C]plied a[D]bundant[G]ly!\n  [Em]His [C]life [G]nullifies [D]sin;\n  [Em]Pow'r s[C]prings [G]now from with[D]in!\n  To be [Em-C]free, over[G]coming spon[D]taneous[G]ly!\n{eoc}\n\n2\nYet this life though it frees,\nIs not meant for mere victory.\nGod is full of intent\nAnd never could flow aimlessly.\nSo this life has a totality,\nA consummate issue encompassing me.\nLife moves and life grows,\nLife shapes as it flows,\nNow I share in this life’s destiny.\nOh, I’ve got rivers of life,\nFlowing out of my innermost being!\nI’ve got rivers of life,\nFlowing out of my innermost being!\n\n{soc}\n  We’ll abide mutually,\n  God and man revealed to be\n  Lamb, Wife, Spirit, and Bride.\n  Come! Drink! And riverside,\n  Grows the tree,\n  Our enjoyment for eternity!\n{eoc}\n\n3\nSo I’ve no cause to frown\nAs one who’s received this zoe.\nI know life runs its course,\nAnd triumphs inevitably.\nI’m required just to stay in the flow.\nIf I do the drinking\nThen God gives the growth.\nSo there’s joy in my heart,\nAnd a spring in my step,\nAnd a smile on my face as I sing,\nOh, I’ve got rivers of life,\nFlowing out of my innermost being!\nI’ve got rivers of life,\nFlowing out of my innermost being!\n\n{comment: (Do not repeat chorus)}";
   }
 }

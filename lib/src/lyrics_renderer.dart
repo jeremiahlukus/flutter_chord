@@ -9,6 +9,7 @@ class LyricsRenderer extends StatefulWidget {
   final TextStyle chordStyle;
   final bool showChord;
   final Function onTapChord;
+  final ScrollController? scrollController;
 
   /// To help stop overflow, this should be the sum of left & right padding
   final int widgetPadding;
@@ -70,6 +71,7 @@ class LyricsRenderer extends StatefulWidget {
       this.scrollPhysics = const ClampingScrollPhysics(),
       this.leadingWidget,
       this.trailingWidget,
+      this.scrollController,
       this.chordNotation = ChordNotation.american})
       : super(key: key);
 
@@ -99,7 +101,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
           fontStyle: FontStyle.italic,
           fontSize: widget.textStyle.fontSize! - 2,
         );
-    _controller = ScrollController();
+    _controller = widget.scrollController ?? ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // executes after build
       _scrollToEnd();
@@ -242,9 +244,10 @@ class _LyricsRendererState extends State<LyricsRenderer> {
     }
 
     if (_controller.offset >= _controller.position.maxScrollExtent) return;
+    final extentToGo =
+        _controller.position.maxScrollExtent - _controller.offset;
 
-    final seconds =
-        (_controller.position.maxScrollExtent / (widget.scrollSpeed)).floor();
+    final seconds = (extentToGo / (widget.scrollSpeed)).floor();
 
     _controller.animateTo(
       _controller.position.maxScrollExtent,
